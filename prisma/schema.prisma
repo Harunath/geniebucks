@@ -17,7 +17,7 @@ model User {
   id          Int           @id @default(autoincrement())
   email       String        @unique
   name        String?
-  password    String        // Add this if you're handling authentication
+  password    String?        // Add this if you're handling authentication
   transactions Transaction[] // One-to-many relationship with Transaction
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
