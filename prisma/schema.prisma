@@ -29,6 +29,7 @@ model Transaction {
   user        User     @relation(fields: [userId], references: [id])
   amount      Float    // Amount of the transaction
   type        String   // Type of transaction (e.g., "income", "expense")
+  source      String?  
   category    String?  // Optional category for the transaction
   description String?  // Optional description
   date        DateTime @default(now()) // Date of the transaction
