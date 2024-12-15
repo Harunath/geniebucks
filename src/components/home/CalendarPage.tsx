@@ -3,8 +3,9 @@ const today = new Date();
 export default function CalendarPages() {
 	return (
 		<>
-			<div>
+			<div className=" ml-auto">
 				<input
+					className="bg-old_lace-500 dark:bg-night-500"
 					type="date"
 					defaultValue={`${today.getFullYear()}-${
 						today.getMonth() + 1

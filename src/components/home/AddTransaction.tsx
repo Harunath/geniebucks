@@ -1,11 +1,13 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
+import AbsoluteCard from "./AbsoluteCard";
 
 type expenseKind = "spent" | "add" | false;
 
 const AddTransaction = () => {
 	const [kind, setKind] = useState<expenseKind>(false);
+	const [enterNew, setEnterNew] = useState(false);
 	const [spent, setSpent] = useState({
 		amount: 0,
 		for: "",
@@ -41,21 +43,46 @@ const AddTransaction = () => {
 		console.log(response);
 	};
 	return (
-		<div className="max-w-60 bg-blue-100">
-			<div className="flex gap-x-2">
-				<button onClick={() => setKind("spent")}>Spent</button>
-				<button onClick={() => setKind("add")}>Add</button>
+		<div className="min-w-80 mt-4">
+			<div className="w-full flex place-content-end">
+				<button
+					onClick={() => setEnterNew(true)}
+					className="min-w-20 p-2 rounded ml-auto bg-african_violet-300 text-puce-800">
+					Add new
+				</button>
 			</div>
+			{enterNew && (
+				<AbsoluteCard
+					close={() => {
+						setKind(false);
+						setEnterNew(false);
+					}}>
+					<div className="h-full w-full rounded bg-english_violet-800 flex flex-col gap-2 justify-center items-center">
+						<button
+							className=" min-w-20 p-2 rounded bg-african_violet-300 text-puce-800"
+							onClick={() => setKind("spent")}>
+							Spent
+						</button>
+						<button
+							className=" min-w-20 p-2 rounded bg-african_violet-300 text-puce-800"
+							onClick={() => setKind("add")}>
+							Add
+						</button>
+					</div>
+				</AbsoluteCard>
+			)}
 			{kind && (
-				<div className="absolute left-0 top-0 flex justify-center items-center h-screen w-screen bg-blue-400">
-					<div className="w-60">
-						<div>
-							<button onClick={() => setKind(false)}>Close</button>
-						</div>
+				<AbsoluteCard
+					close={() => {
+						setKind(false);
+						setEnterNew(false);
+					}}>
+					<div className="h-full w-full bg-english_violet-600 p-1">
 						<div className="flex flex-col">
-							<div className="flex gap-x-2">
+							<div className="grid grid-cols-2 gap-x-2">
 								<label htmlFor="amount">Add Amount :</label>
 								<input
+									className=" bg-pearl-700 rounded"
 									type="number"
 									id="amount"
 									onChange={(e) => {
@@ -72,11 +99,12 @@ const AddTransaction = () => {
 									}}
 								/>
 							</div>
-							<div>
+							<div className="grid grid-cols-2 gap-x-2">
 								<label htmlFor="amount">
 									{kind == "spent" ? "For : " : "From : "}
 								</label>
 								<input
+									className=" bg-pearl-700 rounded"
 									type="text"
 									id="kind"
 									onChange={(e) => {
@@ -86,9 +114,10 @@ const AddTransaction = () => {
 									}}
 								/>
 							</div>
-							<div>
+							<div className="grid grid-cols-2 gap-x-2">
 								<label htmlFor="description">Description :</label>
 								<input
+									className=" bg-pearl-700 rounded"
 									type="textarea"
 									id="description"
 									onChange={(e) => {
@@ -105,16 +134,21 @@ const AddTransaction = () => {
 									}}
 								/>
 							</div>
-							<div>
+							<div className="grid grid-cols-2 gap-x-2">
 								<label htmlFor="date">Date</label>
-								<input type="datetime-local" name="date" id="date" />
+								<input
+									className=" bg-pearl-700 rounded"
+									type="datetime-local"
+									name="date"
+									id="date"
+								/>
 							</div>
 							<button onClick={transaction}>
 								{kind == "add" ? "add income" : "add expense"}
 							</button>
 						</div>
 					</div>
-				</div>
+				</AbsoluteCard>
 			)}
 		</div>
 	);

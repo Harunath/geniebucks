@@ -20,32 +20,38 @@ const List = () => {
 		getTransactions();
 	}, []);
 	const GetDate = (date: Date) => {
-		const t = new Date(date).toLocaleTimeString();
-		return t;
+		const t = new Date(date).toLocaleTimeString().split(" ");
+		return t[0].slice(2) + " " + t[1];
 	};
+
 	return (
-		<div className="w-96 flex flex-col gap-1">
+		<div className="w-96 flex flex-col p-4 bg-old_lace-500 dark:bg-ebony-300 text-ebony-400 dark:text-old_lace-400 rounded overflow-hidden">
+			{transactionList.length && (
+				<div className="grid grid-rows-1 grid-cols-4 justify-items-start gap-x-4 p-2">
+					<p>Type</p>
+					<p>Amount</p>
+					<p>Time</p>
+					<p>Desc</p>
+				</div>
+			)}
 			{transactionList.length > 0 &&
 				transactionList.map((item, index) => (
 					<div
 						key={index}
-						className="flex gap-x-2 bg-yellow-200 dark:bg-neutral-800  dark:text-neutral-300 rounded p-2">
+						className="grid grid-rows-1 grid-cols-4 justify-items-start gap-x-4  border-b border-b-african_violet-300 p-1">
 						<div>
 							{item.type == "income" ? (
-								<p className=" w-20 text-xl font-semibold text-green-400">
-									Income
-								</p>
+								<p className=" w-20 font-semibold text-asparagus">In</p>
 							) : (
-								<p className=" w-20 text-xl font-semibold text-red-600">
-									Expense
-								</p>
+								<p className=" w-20 font-semibold text-folly">Out</p>
 							)}
 						</div>
-						<p className="">Amount : {item.amount}</p>
+						<p className="">{item.amount}</p>
 						<p>{GetDate(item.date)}</p>
-						{item.description.length > 0 && (
+						<p>{item.description.length > 0 ? "1" : "0"}</p>
+						{/* {item.description.length > 0 && (
 							<p>Description : {item.description}</p>
-						)}
+						)} */}
 					</div>
 				))}
 		</div>

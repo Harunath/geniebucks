@@ -9,13 +9,11 @@ export async function GET() {
 	if (!session) {
 		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-expect-error
 	const { id } = session.user;
 
 	const transactions = await prisma.transaction.findMany({
 		where: {
-			userId: id,
+			id,
 		},
 	});
 	return NextResponse.json({ transactions }, { status: 200 });
@@ -41,8 +39,6 @@ export async function POST(req: NextResponse) {
 	if (!session) {
 		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-expect-error
 	const { id } = session.user;
 
 	const transactions = await prisma.transaction.create({

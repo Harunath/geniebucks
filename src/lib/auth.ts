@@ -1,6 +1,8 @@
-import NextAuth, { NextAuthOptions, Session } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
+import { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from "@prisma/client";
+import { JWT } from "next-auth/jwt";
 const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
@@ -12,28 +14,6 @@ export const authOptions: NextAuthOptions = {
 		}),
 	],
 	callbacks: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		async session({ session, token }: { session: Session; token: any }) {
-			console.log(session);
-			console.log(token);
-
-			if (session.user && token) {
-				(session.user as { id?: string }).id = token.id as string;
-			}
-			return session;
-		},
-		async jwt({ token, user }) {
-			// Add user information to the token
-			if (user && user.email) {
-				const res = await prisma.user.findFirst({
-					where: {
-						email: user.email,
-					},
-				});
-				token.id = res?.id;
-			}
-			return token;
-		},
 		async signIn({ user }) {
 			// Check if user already exists in the database
 			const existingUser = await prisma.user.findUnique({
@@ -53,6 +33,24 @@ export const authOptions: NextAuthOptions = {
 			}
 
 			return true; // Returning true allows the sign-in process to continue
+		},
+		async jwt({ token, user }) {
+			// Add user information to the token
+			if (user && user.email) {
+				const res = await prisma.user.findFirst({
+					where: {
+						email: user.email,
+					},
+				});
+				token.id = res?.id;
+			}
+			return token;
+		},
+		async session({ session, token }: { session: Session; token: JWT }) {
+			if (session.user && token) {
+				session.user.id = token.id as number;
+			}
+			return session;
 		},
 	},
 	secret: process.env.NEXTAUTH_SECRET!,
