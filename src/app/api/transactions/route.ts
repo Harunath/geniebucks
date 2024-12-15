@@ -27,7 +27,7 @@ type transaction = {
 	date: Date;
 };
 
-export async function POST(req: NextResponse) {
+export async function POST(req: Request) {
 	const {
 		amount,
 		type,

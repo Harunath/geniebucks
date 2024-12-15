@@ -10,8 +10,6 @@ export async function GET() {
 	if (!session) {
 		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-expect-error
 	const { id } = session.user;
 
 	const response = await prisma.user.findUnique({
