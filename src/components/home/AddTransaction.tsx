@@ -1,11 +1,15 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
-import AbsoluteCard from "./AbsoluteCard";
+import AbsoluteCard from "../Ui/AbsoluteCard";
+import Button from "../Ui/Button";
+import useStore from "@/store/state";
 
 type expenseKind = "spent" | "add" | false;
 
 const AddTransaction = () => {
+	const setTransactionList = useStore((state) => state.setTransactions);
+
 	const [kind, setKind] = useState<expenseKind>(false);
 	const [enterNew, setEnterNew] = useState(false);
 	const [spent, setSpent] = useState({
@@ -20,6 +24,7 @@ const AddTransaction = () => {
 		date: new Date(),
 		description: "",
 	});
+
 	const transaction = async () => {
 		let response;
 		if (kind == "add") {
@@ -41,17 +46,16 @@ const AddTransaction = () => {
 		}
 		setKind(false);
 		setEnterNew(false);
-		if (response.data) alert("Sucess");
-		else alert("Error");
+		if (response.data) {
+			const res = await axios.get("/api/transactions");
+			setTransactionList(res.data.transactions);
+			alert("Sucess");
+		} else alert("Error");
 	};
 	return (
 		<div className="min-w-80 mt-4">
 			<div className="w-full flex place-content-end">
-				<button
-					onClick={() => setEnterNew(true)}
-					className="min-w-20 p-2 rounded ml-auto bg-african_violet-300 text-puce-800">
-					Add new
-				</button>
+				<Button onClick={() => setEnterNew(true)} text="Add new" />
 			</div>
 			{enterNew && (
 				<AbsoluteCard
@@ -60,16 +64,8 @@ const AddTransaction = () => {
 						setEnterNew(false);
 					}}>
 					<div className="h-full w-full rounded bg-english_violet-800 flex flex-col gap-2 justify-center items-center">
-						<button
-							className=" min-w-20 p-2 rounded bg-african_violet-300 text-puce-800"
-							onClick={() => setKind("spent")}>
-							Spent
-						</button>
-						<button
-							className=" min-w-20 p-2 rounded bg-african_violet-300 text-puce-800"
-							onClick={() => setKind("add")}>
-							Add
-						</button>
+						<Button onClick={() => setKind("spent")} text="Spent" />
+						<Button onClick={() => setKind("add")} text="Add" />
 					</div>
 				</AbsoluteCard>
 			)}
@@ -147,9 +143,11 @@ const AddTransaction = () => {
 									id="date"
 								/>
 							</div>
-							<button onClick={transaction}>
-								{kind == "add" ? "add income" : "add expense"}
-							</button>
+							<Button
+								onClick={transaction}
+								text={kind == "add" ? "add income" : "add expense"}
+							/>
+							:
 						</div>
 					</div>
 				</AbsoluteCard>

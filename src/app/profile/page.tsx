@@ -1,4 +1,5 @@
 "use client";
+import UpdateProfile from "@/components/profile/UpdateProfile";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -8,6 +9,8 @@ type userProfile = {
 	email: string;
 	password: string | null;
 	name: string;
+	profession: string;
+	gender: string;
 	id: number;
 };
 const Page = () => {
@@ -15,6 +18,8 @@ const Page = () => {
 		email: "",
 		password: "",
 		name: "",
+		profession: "",
+		gender: "",
 		id: -1,
 	});
 	const getProfile = async () => {
@@ -36,6 +41,19 @@ const Page = () => {
 						<p>email</p>
 						<p className=" font-bold">{profile.email}</p>
 					</div>
+					<div>
+						<p>Profession Details</p>
+						<p className=" font-bold">{profile.profession}</p>
+					</div>
+					<div>
+						<p>Gender</p>
+						<p className=" font-bold">{profile.gender}</p>
+					</div>
+					<UpdateProfile
+						userGender={profile.gender}
+						userName={profile.name}
+						userProfession={profile.profession}
+					/>
 				</div>
 			)}
 		</div>
