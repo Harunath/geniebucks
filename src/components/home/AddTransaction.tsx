@@ -23,11 +23,10 @@ const AddTransaction = () => {
 	const transaction = async () => {
 		let response;
 		if (kind == "add") {
-			console.log(add);
 			response = await axios.post("/api/transactions", {
 				amount: add.amount,
 				type: "income",
-				sourse: add.from,
+				source: add.from,
 				description: add.description,
 				date: add.date,
 			});
@@ -35,12 +34,15 @@ const AddTransaction = () => {
 			response = await axios.post("/api/transactions", {
 				amount: spent.amount,
 				type: "expense",
-				sourse: spent.for,
+				source: spent.for,
 				description: spent.description,
 				date: spent.date,
 			});
 		}
-		console.log(response);
+		setKind(false);
+		setEnterNew(false);
+		if (response.data) alert("Sucess");
+		else alert("Error");
 	};
 	return (
 		<div className="min-w-80 mt-4">
@@ -77,7 +79,7 @@ const AddTransaction = () => {
 						setKind(false);
 						setEnterNew(false);
 					}}>
-					<div className="h-full w-full bg-english_violet-600 p-1">
+					<div className="h-full w-full bg-english_violet-600 text-night p-1">
 						<div className="flex flex-col">
 							<div className="grid grid-cols-2 gap-x-2">
 								<label htmlFor="amount">Add Amount :</label>
@@ -100,7 +102,7 @@ const AddTransaction = () => {
 								/>
 							</div>
 							<div className="grid grid-cols-2 gap-x-2">
-								<label htmlFor="amount">
+								<label htmlFor="kind">
 									{kind == "spent" ? "For : " : "From : "}
 								</label>
 								<input
@@ -108,9 +110,11 @@ const AddTransaction = () => {
 									type="text"
 									id="kind"
 									onChange={(e) => {
-										if (kind == "spent")
+										if (kind == "spent") {
 											setSpent((prev) => ({ ...prev, for: e.target.value }));
-										else setAdd((prev) => ({ ...prev, from: e.target.value }));
+										} else {
+											setAdd((prev) => ({ ...prev, from: e.target.value }));
+										}
 									}}
 								/>
 							</div>

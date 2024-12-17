@@ -13,9 +13,10 @@ export async function GET() {
 
 	const transactions = await prisma.transaction.findMany({
 		where: {
-			id,
+			userId: id,
 		},
 	});
+	console.log(transactions);
 	return NextResponse.json({ transactions }, { status: 200 });
 }
 
@@ -35,6 +36,7 @@ export async function POST(req: Request) {
 		description = "",
 		date = new Date(),
 	}: transaction = await req.json();
+	console.log(source);
 	const session = await getServerSession(authOptions);
 	if (!session) {
 		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
