@@ -1,18 +1,14 @@
 "use client";
-import axios from "axios";
-import React, { useEffect } from "react";
 import useStore from "@/store/state";
+import useTransactions from "@/store/hooks/useTransactions";
+import { useEffect } from "react";
 
 const List = () => {
 	const transactionsList = useStore((state) => state.transactions);
-	const setTransactionList = useStore((state) => state.setTransactions);
-	const getTransactions = async () => {
-		const response = await axios.get("/api/transactions");
-		setTransactionList(response.data.transactions);
-	};
-
+	const getTransactions = useTransactions();
+	console.log("list");
 	useEffect(() => {
-		getTransactions();
+		getTransactions(new Date());
 	}, []);
 
 	const GetDate = (date: Date) => {
@@ -21,7 +17,7 @@ const List = () => {
 	};
 
 	return (
-		<div className="w-96 flex flex-col p-4 bg-old_lace-500 dark:bg-ebony-300 text-ebony-400 dark:text-old_lace-400 rounded overflow-hidden">
+		<div className="w-96 max-h-80 overflow-y-auto flex flex-col p-4 bg-old_lace-500 dark:bg-ebony-300 text-ebony-400 dark:text-old_lace-400 rounded">
 			{transactionsList && transactionsList.length && (
 				<div>
 					<div className="grid grid-rows-1 grid-cols-4 justify-items-start gap-x-4 p-2">

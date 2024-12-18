@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body>
+			<body className="h-screen w-screen overflow-hidden">
 				<Providers>
 					<div className=" h-screen w-screen text-ebony-100 bg-pearl-700 dark:bg-night-200 dark:text-old_lace transition duration-500">
 						<div className=" w-full sm:w-[calc(80%)] lg:w-[calc(60%)] h-full mx-auto">

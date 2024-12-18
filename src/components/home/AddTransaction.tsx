@@ -3,13 +3,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import AbsoluteCard from "../Ui/AbsoluteCard";
 import Button from "../Ui/Button";
-import useStore from "@/store/state";
+import useTransactions from "@/store/hooks/useTransactions";
 
 type expenseKind = "spent" | "add" | false;
 
 const AddTransaction = () => {
-	const setTransactionList = useStore((state) => state.setTransactions);
-
+	const getTransactions = useTransactions();
 	const [kind, setKind] = useState<expenseKind>(false);
 	const [enterNew, setEnterNew] = useState(false);
 	const [spent, setSpent] = useState({
@@ -47,8 +46,7 @@ const AddTransaction = () => {
 		setKind(false);
 		setEnterNew(false);
 		if (response.data) {
-			const res = await axios.get("/api/transactions");
-			setTransactionList(res.data.transactions);
+			getTransactions(new Date());
 			alert("Sucess");
 		} else alert("Error");
 	};
