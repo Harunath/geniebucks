@@ -6,7 +6,6 @@ const useTransactions = () => {
 
 	const getTransactions = async (date: Date) => {
 		try {
-			console.log("inside hook");
 			const response = await axios.get(`/api/transactions?date=${date}`);
 			const transactions = response.data.transactions;
 			if (transactions) setTransactionList(transactions);

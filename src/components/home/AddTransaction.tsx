@@ -135,15 +135,30 @@ const AddTransaction = () => {
 							<div className="grid grid-cols-2 gap-x-2">
 								<label htmlFor="date">Date</label>
 								<input
+									defaultValue={`${new Date().getFullYear()}-${
+										new Date().getMonth() + 1
+									}-${new Date().getDate()}`}
 									className=" bg-pearl-700 rounded"
 									type="datetime-local"
 									name="date"
 									id="date"
+									onChange={(e) => {
+										if (kind == "spent") {
+											setSpent((prev) => ({
+												...prev,
+												date: new Date(e.target.value),
+											}));
+										} else
+											setAdd((prev) => ({
+												...prev,
+												date: new Date(e.target.value),
+											}));
+									}}
 								/>
 							</div>
 							<Button
 								onClick={transaction}
-								text={kind == "add" ? "add income" : "add expense"}
+								text={kind == "spent" ? "add expense" : "add income"}
 							/>
 							:
 						</div>

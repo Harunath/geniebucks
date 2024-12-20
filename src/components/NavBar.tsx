@@ -23,8 +23,8 @@ export default function Navbar() {
 						</Link>
 					</li>
 					<li>
-						<Link href="/settings" className="hover:underline">
-							Settings
+						<Link href="/emis" className="hover:underline">
+							Emis
 						</Link>
 					</li>
 					<li>

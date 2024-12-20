@@ -22,8 +22,8 @@ export async function GET(req: NextRequest) {
 	if (!session) {
 		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
+
 	const { id } = session.user;
-	console.log(date);
 	const transactions = await prisma.transaction.findMany({
 		where: {
 			userId: id,
