@@ -51,8 +51,8 @@ const AddTransaction = () => {
 		} else alert("Error");
 	};
 	return (
-		<div className="min-w-80 mt-4">
-			<div className="w-full flex place-content-end">
+		<div className="min-w-64 mt-4">
+			<div className=" w-full">
 				<Button onClick={() => setEnterNew(true)} text="Add new" />
 			</div>
 			{enterNew && (
