@@ -4,6 +4,7 @@ import { useState } from "react";
 import Totals from "./Totals";
 import { TransactTypes } from "@/lib/types";
 import AddTransaction from "./AddTransaction";
+import CalendarPages from "./CalendarPage";
 
 const List = () => {
 	const transactionsList = useStore((state) => state.transactions);
@@ -16,6 +17,7 @@ const List = () => {
 
 	return (
 		<div className="w-full h-full flex flex-col p-4 bg-gradient-to-br from-[#ffffff]/90 to-[#e6e9f0]/90 dark:from-[#0c0e29]/10 dark:to-[#141842]/80 text-[#080a21]/90 dark:text-[#ebecf9]/90 rounded-lg shadow-md shadow-[#080a21]/5 dark:shadow-[#ebecf9]/5 hover:shadow-xl transition-all duration-300">
+			<CalendarPages />
 			{transactionsList && transactionsList.length > 0 ? (
 				<div className="space-y-4 h-full">
 					<div className="grid grid-cols-4 gap-x-4 p-2 font-semibold text-[#2e9900] dark:text-[#89d57b]">
@@ -84,12 +86,15 @@ const List = () => {
 					</div>
 					<div>
 						<Totals transactions={transactionsList} />
-						<AddTransaction />
 					</div>
+					<AddTransaction />
 				</div>
 			) : (
 				<div className="text-center py-8 text-[#2e9900] dark:text-[#89d57b]">
-					NO TRANSACTIONS .....!
+					<p>NO TRANSACTIONS .....!</p>
+					<div className=" w-1/2">
+						<AddTransaction />
+					</div>
 				</div>
 			)}
 		</div>
