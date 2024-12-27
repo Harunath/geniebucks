@@ -61,9 +61,24 @@ const AddTransaction = () => {
 						setKind(false);
 						setEnterNew(false);
 					}}>
-					<div className="h-full w-full rounded bg-english_violet-800 flex flex-col gap-2 justify-center items-center">
-						<Button onClick={() => setKind("spent")} text="Spent" />
-						<Button onClick={() => setKind("add")} text="Add" />
+					<div className="h-full w-full rounded-lg bg-gradient-to-br from-[#ffffff] to-[#e6e9f0] dark:from-[#0c0e29] dark:to-[#141842] flex flex-col gap-6 justify-center items-center p-8 shadow-lg">
+						<div>
+							<p className="text-[#080a21] dark:text-[#ebecf9] text-xl font-semibold">
+								Select the type of transaction
+							</p>
+						</div>
+						<div className="flex gap-4">
+							<Button
+								onClick={() => setKind("spent")}
+								text="Spent"
+								className="bg-[#ff4136] hover:bg-[#ff5147] text-[#ffffff] dark:text-[#ebecf9] px-6 py-3 rounded-md transition-colors duration-300"
+							/>
+							<Button
+								onClick={() => setKind("add")}
+								text="Add"
+								className="bg-[#2e9900] hover:bg-[#33ac00] text-[#ffffff] dark:text-[#ebecf9] px-6 py-3 rounded-md transition-colors duration-300"
+							/>
+						</div>
 					</div>
 				</AbsoluteCard>
 			)}
@@ -73,12 +88,16 @@ const AddTransaction = () => {
 						setKind(false);
 						setEnterNew(false);
 					}}>
-					<div className="h-full w-full bg-english_violet-600 text-night p-1">
-						<div className="flex flex-col">
-							<div className="grid grid-cols-2 gap-x-2">
-								<label htmlFor="amount">Add Amount :</label>
+					<div className="h-full w-full p-6 rounded-lg shadow-lg bg-white dark:bg-[#0c0e29]">
+						<div className="flex flex-col space-y-4">
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+								<label
+									htmlFor="amount"
+									className="text-sm font-medium text-[#080a21] dark:text-[#ebecf9]">
+									Add Amount:
+								</label>
 								<input
-									className=" bg-pearl-700 rounded"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									type="number"
 									id="amount"
 									onChange={(e) => {
@@ -95,12 +114,14 @@ const AddTransaction = () => {
 									}}
 								/>
 							</div>
-							<div className="grid grid-cols-2 gap-x-2">
-								<label htmlFor="kind">
-									{kind == "spent" ? "For : " : "From : "}
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-2">
+								<label
+									htmlFor="kind"
+									className="text-sm font-medium text-[#080a21] dark:text-[#ebecf9]">
+									{kind == "spent" ? "For:" : "From:"}
 								</label>
 								<input
-									className=" bg-pearl-700 rounded"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									type="text"
 									id="kind"
 									onChange={(e) => {
@@ -112,12 +133,16 @@ const AddTransaction = () => {
 									}}
 								/>
 							</div>
-							<div className="grid grid-cols-2 gap-x-2">
-								<label htmlFor="description">Description :</label>
-								<input
-									className=" bg-pearl-700 rounded"
-									type="textarea"
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+								<label
+									htmlFor="description"
+									className="text-sm font-medium text-[#080a21] dark:text-[#ebecf9]">
+									Description:
+								</label>
+								<textarea
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300 resize-none"
 									id="description"
+									rows={3}
 									onChange={(e) => {
 										if (kind == "spent")
 											setSpent((prev) => ({
@@ -132,13 +157,17 @@ const AddTransaction = () => {
 									}}
 								/>
 							</div>
-							<div className="grid grid-cols-2 gap-x-2">
-								<label htmlFor="date">Date</label>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+								<label
+									htmlFor="date"
+									className="text-sm font-medium text-[#080a21] dark:text-[#ebecf9]">
+									Date:
+								</label>
 								<input
 									defaultValue={`${new Date().getFullYear()}-${
 										new Date().getMonth() + 1
 									}-${new Date().getDate()}`}
-									className=" bg-pearl-700 rounded"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									type="datetime-local"
 									name="date"
 									id="date"
@@ -158,9 +187,9 @@ const AddTransaction = () => {
 							</div>
 							<Button
 								onClick={transaction}
-								text={kind == "spent" ? "add expense" : "add income"}
+								text={kind == "spent" ? "Add Expense" : "Add Income"}
+								className="w-full mt-4 bg-[#2e9900] hover:bg-[#33ac00] text-white dark:text-[#ebecf9] py-3 rounded-md transition-colors duration-300"
 							/>
-							:
 						</div>
 					</div>
 				</AbsoluteCard>

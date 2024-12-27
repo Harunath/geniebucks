@@ -11,8 +11,11 @@ export async function GET(req: NextRequest) {
 	// Default to the current day if no date is provided
 	if (date) {
 		const d = new Date(date);
-		startOfDay = new Date(d.setHours(0, 0, 0, 0)); // Start of the day
-		endOfDay = new Date(d.setHours(23, 59, 59, 999)); // End of the day
+		const correctDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+		console.log(d, "without correction");
+		console.log(correctDate, "with correction");
+		startOfDay = new Date(correctDate.setHours(0, 0, 0, 0)); // Start of the day
+		endOfDay = new Date(correctDate.setHours(23, 59, 59, 999)); // End of the day
 	} else {
 		const d = new Date(); // Today's date
 		startOfDay = new Date(d.setHours(0, 0, 0, 0)); // Start of today
@@ -22,7 +25,8 @@ export async function GET(req: NextRequest) {
 	if (!session) {
 		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 	}
-
+	console.log(startOfDay, "start date");
+	console.log(endOfDay, "endof the day");
 	const { id } = session.user;
 	const transactions = await prisma.transaction.findMany({
 		where: {

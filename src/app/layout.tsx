@@ -17,10 +17,12 @@ export default function RootLayout({
 		<html lang="en">
 			<body className="h-screen w-screen overflow-hidden">
 				<Providers>
-					<div className=" h-screen w-screen text-ebony-100 bg-pearl-700 dark:bg-night-200 dark:text-old_lace transition duration-500">
-						<div className=" w-full sm:w-[calc(80%)] lg:w-[calc(60%)] h-full mx-auto">
+					<div className="h-screen w-screen text-[#080a21] dark:text-[#ebecf9] bg-[#f0f2f5] dark:bg-[#080a21] transition duration-500">
+						<div className="w-full px-4 sm:w-[80%] sm:px-0 lg:w-[60%] h-full mx-auto flex flex-col">
 							<Navbar />
-							{children}
+							<div className="my-4 grow p-6 rounded-lg bg-gradient-to-br from-[#ffffff] to-[#e6e9f0] dark:from-[#0c0e29] dark:to-[#141842] shadow-lg">
+								{children}
+							</div>
 						</div>
 					</div>
 				</Providers>

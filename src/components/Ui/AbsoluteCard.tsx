@@ -8,16 +8,30 @@ const AbsoluteCard = ({
 	close: () => void;
 }) => {
 	return (
-		<div className="absolute left-0 top-0 z-10 h-screen w-screen bg-opacity-50 backdrop-blur-md bg-night-100 flex justify-center items-center">
-			<div className="min-w-80 min-h-80 rounded overflow-hidden p-2 bg-english_violet-700 shadow shadow-african_violet-700 flex flex-col">
-				<div className="w-full mb-2 flex place-content-end">
+		<div className="fixed inset-0 z-50 flex items-center justify-center bg-[#f0f2f5] dark:bg-[#080a12] backdrop-blur-md">
+			<div className="w-11/12 max-w-md transform overflow-hidden rounded-2xl bg-gradient-to-br from-[#ffffff] to-[#e6e9f0] dark:from-[#0c0e31] dark:to-[#141851] text-[#080a21] dark:text-[#ebecf9] p-6 text-left align-middle shadow-xl transition-all">
+				<div className="flex items-center justify-between mb-4">
+					<h3 className="text-lg font-medium leading-6 text-[#080a21] dark:text-[#ebecf9]">
+						Modal Title
+					</h3>
 					<button
-						className="px-2 bg-old_lace bg-opacity-30 text-night rounded-full ml-auto"
-						onClick={close}>
-						X
+						onClick={close}
+						className="rounded-full p-1 text-[#080a21] dark:text-[#ebecf9] transition-colors duration-300 hover:bg-[#31aa3b]/20 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50">
+						<svg
+							className="h-6 w-6"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M6 18L18 6M6 6l12 12"
+							/>
+						</svg>
 					</button>
 				</div>
-				<div className="grow h-full w-full grid">{children}</div>
+				<div className="mt-2">{children}</div>
 			</div>
 		</div>
 	);
