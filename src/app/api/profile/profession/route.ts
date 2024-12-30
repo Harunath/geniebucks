@@ -1,10 +1,8 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { redirect } from "next/navigation";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
 	const { profession } = await req.json();

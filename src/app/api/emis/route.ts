@@ -1,11 +1,10 @@
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 const emiSchema = z.object({
 	amount: z.number().positive(),

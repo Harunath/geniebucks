@@ -1,9 +1,8 @@
 import { authOptions } from "@/lib/auth";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
 export async function GET(req: NextRequest) {
 	const date = req.nextUrl?.searchParams.get("date");
 	let startOfDay: Date, endOfDay: Date;
