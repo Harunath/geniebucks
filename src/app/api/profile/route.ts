@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(request: Request) {
 	const session = await getServerSession(authOptions);
 	if (!session) {
-		redirect("/api/auth/signin");
+		return NextResponse.redirect(new URL("/api/auth/signin", request.url));
 	}
 	const { id } = session.user;
 
@@ -19,7 +18,7 @@ export async function GET() {
 	return NextResponse.json({ response });
 }
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
 	try {
 		const {
 			name,
@@ -35,10 +34,10 @@ export async function POST(req: Request) {
 				| "Retired"
 				| "Unemployed";
 			gender: "Male" | "Female" | "Other" | "PreferNotToSay";
-		} = await req.json();
+		} = await request.json();
 		const session = await getServerSession(authOptions);
 		if (!session) {
-			redirect("/api/auth/signin");
+			return NextResponse.redirect(new URL("/api/auth/signin", request.url));
 		}
 		const { id } = session.user;
 

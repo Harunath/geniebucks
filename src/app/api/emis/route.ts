@@ -1,7 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -19,12 +18,13 @@ const emiSchema = z.object({
 	for: z.string().nonempty(),
 });
 
-export async function GET() {
+export async function GET(request: Request) {
 	try {
 		console.log("working1");
 		const session = await getServerSession(authOptions);
 		console.log("working2");
-		if (!session) redirect("/api/auth/signin");
+		if (!session)
+			return NextResponse.redirect(new URL("/api/auth/signin", request.url));
 		const id = session.user.id;
 		console.log("working3");
 		const emis = await prisma.emis.findMany({
@@ -42,10 +42,10 @@ export async function GET() {
 	}
 }
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
 	try {
 		const session = await getServerSession(authOptions);
-		const body = await req.json();
+		const body = await request.json();
 		const result = emiSchema.safeParse(body);
 		if (!result.success) {
 			return NextResponse.json(
@@ -54,7 +54,8 @@ export async function POST(req: Request) {
 			);
 		}
 
-		if (!session || !session.user) redirect("/api/auth/signin");
+		if (!session || !session.user)
+			return NextResponse.redirect(new URL("/api/auth/signin", request.url));
 
 		const id = session.user.id;
 		const createEmi = { ...result.data, userId: id };
