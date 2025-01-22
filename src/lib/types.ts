@@ -42,6 +42,7 @@ export enum TransactTypes {
 	income = "income",
 }
 
+// Enums
 export enum GenderTypes {
 	Male = "Male",
 	Female = "Female",
@@ -50,16 +51,16 @@ export enum GenderTypes {
 }
 
 export enum EmiStatus {
-	PENDING,
-	PAID,
-	OVERDUE,
+	PENDING = "PENDING",
+	PAID = "PAID",
+	OVERDUE = "OVERDUE",
 }
 
 export enum ProfessionTypes {
-	Employed,
-	SelfEmployed,
-	Business,
-	Student,
-	Retired,
-	Unemployed,
+	Employed = "Employed",
+	SelfEmployed = "SelfEmployed",
+	Business = "Business",
+	Student = "Student",
+	Retired = "Retired",
+	Unemployed = "Unemployed",
 }

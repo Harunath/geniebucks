@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import AbsoluteCard from "../Ui/AbsoluteCard";
 import axios from "axios";
 import Button from "../Ui/Button";
+import { toast, ToastContainer } from "react-toastify";
 
 function CreateEmi() {
 	const [open, setOpen] = useState(false);
@@ -24,14 +25,17 @@ function CreateEmi() {
 			const response = await axios.post("/api/emis", { ...emi });
 			console.log(response.data);
 			setOpen(false);
+			toast("Successfully created an EMI");
 		} catch (e) {
 			console.error(e);
-			alert("Failed to create EMI");
+			// alert("Failed to create EMI");
+			toast("Failed to create EMI");
 		}
 	};
 
 	return (
 		<div>
+			<ToastContainer draggable={false} />
 			<Button
 				onClick={() => setOpen(true)}
 				text="Create EMI"

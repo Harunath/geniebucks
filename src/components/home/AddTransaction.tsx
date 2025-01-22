@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AbsoluteCard from "../Ui/AbsoluteCard";
 import Button from "../Ui/Button";
 import useTransactions from "@/store/hooks/useTransactions";
+import { toast, ToastContainer } from "react-toastify";
 
 type expenseKind = "spent" | "add" | false;
 
@@ -47,11 +48,15 @@ const AddTransaction = () => {
 		setEnterNew(false);
 		if (response.data) {
 			getTransactions(new Date());
-			alert("Sucess");
-		} else alert("Error");
+			toast("Success");
+			// toast(({ closeToast }) => <div>Hello 👋</div>);
+			// alert("Sucess");
+		} else toast("Failed");
+		// alert("Error");
 	};
 	return (
 		<div className="min-w-64 mt-4">
+			<ToastContainer draggable={false} />
 			<div className=" w-full">
 				<Button onClick={() => setEnterNew(true)} text="Add new" />
 			</div>

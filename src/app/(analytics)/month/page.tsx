@@ -1,7 +1,7 @@
 import React from "react";
 
 function page() {
-	return <div>Get Started</div>;
+	return <div>Month</div>;
 }
 
 export default page;

@@ -3,19 +3,29 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request) {
+export async function GET() {
 	const session = await getServerSession(authOptions);
 	if (!session) {
-		return NextResponse.redirect(new URL("/api/auth/signin", request.url));
+		return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 	}
+
 	const { id } = session.user;
 
-	const response = await prisma.user.findUnique({
-		where: {
-			id,
+	const profile = await prisma.user.findUnique({
+		where: { id },
+		select: {
+			name: true,
+			email: true,
+			gender: true,
+			profession: true,
 		},
 	});
-	return NextResponse.json({ response });
+
+	if (!profile) {
+		return NextResponse.json({ error: "User not found" }, { status: 404 });
+	}
+
+	return NextResponse.json(profile);
 }
 
 export async function POST(request: Request) {

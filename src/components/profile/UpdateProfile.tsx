@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import Button from "../Ui/Button";
 import AbsoluteCard from "../Ui/AbsoluteCard";
+import { useRouter } from "next/router";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 function UpdateProfile({
 	userName,
@@ -13,6 +15,7 @@ function UpdateProfile({
 	userProfession: string;
 	userGender: string;
 }) {
+	const router = useRouter();
 	const [update, setUpdate] = useState(false);
 	const genderOptions = ["Male", "Female", "Other", "PreferNotToSay"];
 	const professionOptions = [
@@ -34,8 +37,13 @@ function UpdateProfile({
 				gender,
 				profession,
 			});
-			console.log(response);
-			alert("Success");
+			if (response.status >= 300 && response.status < 400) {
+				// This is a redirect
+				router.push(response.headers.location);
+			} else {
+				toast("Success");
+				// alert("Success");
+			}
 		} catch (error) {
 			if (error instanceof Error) console.error(error);
 			console.error("failed with unknown error");
@@ -46,6 +54,7 @@ function UpdateProfile({
 
 	return (
 		<div>
+			<ToastContainer autoClose={false} draggable={false} />
 			<Button
 				onClick={() => setUpdate(true)}
 				text="Update Profile"

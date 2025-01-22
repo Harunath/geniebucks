@@ -1,7 +1,7 @@
 import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
 	const date = req.nextUrl?.searchParams.get("date");
@@ -30,41 +30,6 @@ export async function GET(req: NextRequest) {
 				gte: startOfDay, // Greater than or equal to the start of the day
 				lte: endOfDay, // Less than or equal to the end of the day
 			},
-		},
-	});
-	return NextResponse.json({ transactions }, { status: 200 });
-}
-
-type transaction = {
-	amount: number;
-	type: string;
-	source: string;
-	description: string;
-	date: Date;
-};
-
-export async function POST(req: Request) {
-	const {
-		amount,
-		type,
-		source,
-		description = "",
-		date = new Date(),
-	}: transaction = await req.json();
-	const session = await getServerSession(authOptions);
-	if (!session) {
-		return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-	}
-	const { id } = session.user;
-
-	const transactions = await prisma.transaction.create({
-		data: {
-			userId: id,
-			amount,
-			type,
-			source,
-			description,
-			date,
 		},
 	});
 	return NextResponse.json({ transactions }, { status: 200 });
