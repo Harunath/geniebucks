@@ -20,20 +20,15 @@ const emiSchema = z.object({
 
 export async function GET(request: Request) {
 	try {
-		console.log("working1");
 		const session = await getServerSession(authOptions);
-		console.log("working2");
 		if (!session)
 			return NextResponse.redirect(new URL("/api/auth/signin", request.url));
 		const id = session.user.id;
-		console.log("working3");
 		const emis = await prisma.emis.findMany({
 			where: {
 				userId: id,
 			},
 		});
-		console.log("working4");
-		console.log(emis);
 		if (emis.length) return NextResponse.json({ emis });
 		return NextResponse.json({ emis: [] });
 	} catch (error) {

@@ -6,6 +6,8 @@ import { TransactTypes } from "@/lib/types";
 import AddTransaction from "./AddTransaction";
 import CalendarPages from "./CalendarPage";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
 
 const List = () => {
 	const transactionsList = useStore((state) => state.transactions);
@@ -18,7 +20,19 @@ const List = () => {
 
 	return (
 		<div className="w-full h-full flex flex-col p-4 bg-gradient-to-br from-[#ffffff]/90 to-[#e6e9f0]/90 dark:from-[#0c0e29]/10 dark:to-[#141842]/80 text-[#080a21]/90 dark:text-[#ebecf9]/90 rounded-lg shadow-md shadow-[#080a21]/5 dark:shadow-[#ebecf9]/5 hover:shadow-xl transition-all duration-300">
-			<CalendarPages />
+			<div className="flex flex- justify-end items-center gap-x-2">
+				<CalendarPages />
+
+				<Link className="w-fit" href="/uploadimage">
+					<Image
+						src="https://res.cloudinary.com/degrggosz/image/upload/v1739213272/photo-camera_bqbpyr.svg"
+						alt="Upload Image"
+						width={100}
+						height={100}
+						className="h-10 w-10"
+					/>
+				</Link>
+			</div>
 			{transactionsList && transactionsList.length > 0 ? (
 				<div className="space-y-4 h-full">
 					<div className="grid grid-cols-3 gap-x-4 p-2 sm:w-11/12 font-semibold text-[#2e9900] dark:text-[#89d57b]">
