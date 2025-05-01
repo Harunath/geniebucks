@@ -2,7 +2,6 @@
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { getGoogleGenerativeAI } from "@/lib/gemini";
 
 export default function ImageUpload() {
 	const [image, setImage] = useState<File | null>(null);
@@ -30,8 +29,12 @@ export default function ImageUpload() {
 		try {
 			const { data } = await axios.post("/api/upload", formData);
 			setImageUrl(data.secure_url);
-			const text = await getGoogleGenerativeAI({ link: data.secure_url });
-			setText(text);
+			console.log(data.secure_url);
+			const response = await axios.post("api/gemini", {
+				imageUrl: data.secure_url,
+			});
+			setText(response.data.text);
+			console.log(response.data.text);
 		} catch (error) {
 			console.error("Upload error:", error);
 			alert("Image upload failed");

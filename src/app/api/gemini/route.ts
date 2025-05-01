@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { NextResponse } from "next/server";
 
-export const getGoogleGenerativeAI = async ({ link }: { link: string }) => {
+export const POST = async (request: Request) => {
 	try {
-		const genAI = new GoogleGenerativeAI(
-			process.env.NEXT_PUBLIC_GEMINI_API_KEY!
-		); // API key from env variable
+		const { link } = await request.json();
+		const genAI = new GoogleGenerativeAI(process.env.Gemini_API_KEY!); // API key from env variable
 
 		const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Use "gemini-pro" (no "models/" prefix)
 
@@ -34,9 +34,12 @@ export const getGoogleGenerativeAI = async ({ link }: { link: string }) => {
 		}
 
 		console.log(result.response.text());
-		return result.response.text();
+		return NextResponse.json(
+			{ result: result.response.text() },
+			{ status: 200 }
+		);
 	} catch (error) {
-		console.error("Error in getGoogleGenerativeAI:", error);
-		throw error; // Re-throw the error for handling by the caller
+		if (error instanceof Error)
+			return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 };

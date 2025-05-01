@@ -1,27 +1,51 @@
-"use client";
+import { authOptions } from "@/lib/auth";
 import { userType } from "@/lib/types";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+import { getServerSession, User } from "next-auth";
+import { redirect } from "next/navigation";
 
-const Page = () => {
-	const [profile, setProfile] = useState<userType | null>(null);
-	const { data: session } = useSession();
+interface ProfileFieldProps {
+	label: string;
+	value?: string | null;
+}
 
-	useEffect(() => {
-		const fetchProfile = async () => {
-			try {
-				const response = await axios.get("/api/profile");
-				setProfile(response.data);
-			} catch (error) {
-				console.error("Error fetching profile:", error);
+const ProfileField = ({ label, value }: ProfileFieldProps) => (
+	<div>
+		<p className="text-sm text-[#89d57b]">{label}</p>
+		<p className="font-bold">{value || "N/A"}</p>
+	</div>
+);
+
+async function getProfileData(
+	user: User | undefined
+): Promise<userType | null> {
+	if (!user || !user.email) {
+		return null;
+	}
+	try {
+		const response = await axios.get(
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/profile`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
 			}
-		};
+		);
+		return response.data as userType;
+	} catch (error) {
+		console.error("Error fetching profile:", error);
+		return null;
+	}
+}
 
-		if (session) {
-			fetchProfile();
-		}
-	}, [session]);
+const Page = async () => {
+	const session = await getServerSession(authOptions);
+
+	if (!session?.user?.email) {
+		redirect("/api/auth/signin"); // Ensure you import 'redirect' from 'next/navigation'
+	}
+
+	const profile = await getProfileData(session?.user);
 
 	if (!profile) {
 		return <div>Loading...</div>;
@@ -42,12 +66,5 @@ const Page = () => {
 		</div>
 	);
 };
-
-const ProfileField = ({ label, value }: { label: string; value: string }) => (
-	<div>
-		<p className="text-sm text-[#89d57b]">{label}</p>
-		<p className="font-bold">{value}</p>
-	</div>
-);
 
 export default Page;

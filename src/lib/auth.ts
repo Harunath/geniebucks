@@ -3,6 +3,8 @@ import { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import { prisma } from "./prisma";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
 	providers: [
@@ -10,6 +12,45 @@ export const authOptions: NextAuthOptions = {
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID!,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+		}),
+		CredentialsProvider({
+			name: "Credentials",
+			credentials: {
+				email: { label: "Email", type: "email", required: true },
+				password: { label: "Password", type: "password", required: true },
+			},
+			async authorize(credentials) {
+				if (!credentials?.email || !credentials?.password) {
+					throw new Error("Invalid email or password");
+				}
+				const user = await prisma.user.findFirst({
+					where: { email: credentials.email },
+					select: {
+						id: true,
+						email: true,
+						password: true,
+						firstname: true,
+						lastname: true,
+					},
+				});
+				if (user) {
+					// Verify password
+					const isValidPassword = await bcrypt.compare(
+						credentials.password,
+						user.password
+					);
+					if (!isValidPassword) {
+						throw new Error("Invalid password");
+					}
+					return {
+						id: user.id,
+						email: user.email,
+						firstname: user.firstname,
+						lastname: user.lastname ? user.lastname : "",
+					};
+				}
+				return null;
+			},
 		}),
 	],
 	callbacks: {
@@ -23,12 +64,7 @@ export const authOptions: NextAuthOptions = {
 
 			// If user doesn't exist, create a new record
 			if (!existingUser) {
-				await prisma.user.create({
-					data: {
-						email: user.email!,
-						name: user?.name || "Unnamed",
-					},
-				});
+				return false;
 			}
 
 			return true; // Returning true allows the sign-in process to continue
@@ -42,15 +78,24 @@ export const authOptions: NextAuthOptions = {
 					},
 				});
 				token.id = res?.id;
+				token.email = res?.email;
+				token.firstname = res?.firstname;
+				token.lastname = res?.lastname;
 			}
 			return token;
 		},
 		async session({ session, token }: { session: Session; token: JWT }) {
 			if (session.user && token) {
-				session.user.id = token.id as number;
+				session.user.id = token.id as string;
+				session.user.email = token.email as string;
+				session.user.firstname = token.firstname as string;
+				session.user.lastname = token.lastname as string;
 			}
 			return session;
 		},
+	},
+	pages: {
+		signIn: "/",
 	},
 	secret: process.env.NEXTAUTH_SECRET!,
 };

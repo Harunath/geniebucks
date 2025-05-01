@@ -14,7 +14,8 @@ export async function GET() {
 	const profile = await prisma.user.findUnique({
 		where: { id },
 		select: {
-			name: true,
+			firstname: true,
+			lastname: true,
 			email: true,
 			gender: true,
 			profession: true,
