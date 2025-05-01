@@ -13,54 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  name        String?
-  gender      GenderTypes   @default(PreferNotToSay)
-  password    String?        // Add this if you're handling authentication
-  transactions Transaction[] // One-to-many relationship with Transaction
-  profession  ProfessionTypes @default(Unemployed)
-  Emis Emis[]
-  setSpendLimit Boolean @default(false)
-  spendingLimit Int? @default(0)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-
-}
-
-model Transaction {
-  id          Int      @id @default(autoincrement())
-  userId      Int      // Foreign key for User
-  user        User     @relation(fields: [userId], references: [id])
-  amount      Float    // Amount of the transaction
-  type        String   // Type of transaction (e.g., "income", "expense")
-  source      String?  
-  category    String?  // Optional category for the transaction
-  description String?  // Optional description
-  date        DateTime @default(now()) // Date of the transaction
-}
-
-model Emis {
-  id               Int        @id @default(autoincrement())
-  userId           Int        // Foreign key for User
-  user             User       @relation(fields: [userId], references: [id])
-  amount           Decimal    @db.Decimal(10,2) // Precise monetary value
-  to               String?    // Optional recipient
-  for              String     // Purpose or reason
-  status           EmiStatus  @default(PENDING) // EMI status
-  installmentNumber Int?      // Current installment number
-  totalInstallments Int?      // Total number of installments
-  dueDate          DateTime   @default(now())   // Due date for EMI
-  endDate          DateTime   @default(now())   // End date for EMI
-  date             DateTime   @default(now())   // Date of the earnings
-  notes            String?    // Optional notes or comments
-
-  @@index([dueDate])
-  @@index([userId])
-}
-
 enum GenderTypes {
   Male
   Female
@@ -75,10 +27,109 @@ enum EmiStatus {
 }
 
 enum ProfessionTypes {
-  Employed
-  SelfEmployed
-  Business
-  Student
-  Retired
-  Unemployed
+  EMPLOYED
+  SELFEMPLOYED
+  BUSINESS
+  STUDENT
+  RETIRED
+  UNEMPLOYED
 }
+
+model User {
+  id          String           @id @default(uuid())
+  email       String        @unique
+  emailVerified Boolean   @default(false)
+  firstname   String
+  lastname    String?
+  phone       String
+  phoneVerified Boolean @default(false)
+  gender      GenderTypes   @default(PreferNotToSay)
+  password    String        // Add this if you're handling authentication
+  transactions Transaction[] // One-to-many relationship with Transaction
+  profession  ProfessionTypes @default(UNEMPLOYED)
+  Emis Emis[]
+  setSpendLimit Boolean @default(false)
+  spendingLimit Int? @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model GmailVerificationCode {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Transaction {
+  id          String      @id @default(uuid())
+  amount      Decimal    // Amount of the transaction
+  type        String   // Type of transaction (e.g., "income", "expense")
+  source      String?  
+  category    String?  // Optional category for the transaction
+  description String?  // Optional description
+  date        DateTime @default(now()) // Date of the transaction
+
+// relationships
+  userId      String      // Foreign key for User
+  user        User     @relation(fields: [userId], references: [id])
+
+  categories Category[]
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model  Category {
+  id          String      @id @default(uuid())
+  tansactionid      String      // Foreign key for User
+  transaction        Transaction     @relation(fields: [tansactionid], references: [id])
+  amount      Decimal    // Amount of the transaction
+  type        String   // Type of transaction (e.g., "income", "expense")
+  source      String?  
+  category    String?  // Optional category for the transaction
+  description String?  // Optional description
+  date        DateTime @default(now()) // Date of the transaction
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Emis {
+  id               String      @id @default(uuid())
+  amount           Decimal    @db.Decimal(10,2) // Precise monetary value
+  to               String?    // Optional recipient
+  for              String     // Purpose or reason
+  status           EmiStatus  @default(PENDING) // EMI status
+  installmentNumber Int?      // Current installment number
+  totalInstallments Int?      // Total number of installments
+  dueDate          DateTime   @default(now())   // Due date for EMI
+  endDate          DateTime   @default(now())   // End date for EMI
+  date             DateTime   @default(now())   // Date of the earnings
+  notes            String?    // Optional notes or comments
+
+// relationships
+  userId           String        // Foreign key for User
+  user             User       @relation(fields: [userId], references: [id])
+
+  categories  EmiCategory[]
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model  EmiCategory {
+  id          String      @id @default(uuid())
+  emiid      String      // Foreign key for User
+  emi        Emis     @relation(fields: [emiid], references: [id])
+  amount      Decimal    // Amount of the transaction
+  type        String   // Type of transaction (e.g., "income", "expense")
+  source      String?  
+  category    String?  // Optional category for the transaction
+  description String?  // Optional description
+  date        DateTime @default(now()) // Date of the transaction
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+
