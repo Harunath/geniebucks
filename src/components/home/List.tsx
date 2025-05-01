@@ -19,7 +19,7 @@ const List = () => {
 	};
 
 	return (
-		<div className="w-full h-full flex flex-col p-4 bg-gradient-to-br from-[#ffffff]/90 to-[#e6e9f0]/90 dark:from-[#0c0e29]/10 dark:to-[#141842]/80 text-[#080a21]/90 dark:text-[#ebecf9]/90 rounded-lg shadow-md shadow-[#080a21]/5 dark:shadow-[#ebecf9]/5 hover:shadow-xl transition-all duration-300">
+		<div className="w-full h-full flex flex-col p-4 bg-linear-to-br from-[#ffffff]/90 to-[#e6e9f0]/90 dark:from-[#0c0e29]/10 dark:to-[#141842]/80 text-[#080a21]/90 dark:text-[#ebecf9]/90 rounded-lg shadow-md shadow-[#080a21]/5 dark:shadow-[#ebecf9]/5 hover:shadow-xl transition-all duration-300">
 			<div className="flex flex- justify-end items-center gap-x-2">
 				<CalendarPages />
 

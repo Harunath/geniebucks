@@ -114,7 +114,7 @@ const Register = () => {
 					type="text"
 					name="firstname"
 					placeholder="First Name"
-					className="w-full p-2 border rounded mb-3"
+					className="w-full p-2 border rounded-sm mb-3"
 					value={formData.firstname}
 					onChange={handleChange}
 				/>
@@ -122,7 +122,7 @@ const Register = () => {
 					type="text"
 					name="lastname"
 					placeholder="Last Name"
-					className="w-full p-2 border rounded mb-3"
+					className="w-full p-2 border rounded-sm mb-3"
 					value={formData.lastname}
 					onChange={handleChange}
 				/>
@@ -130,7 +130,7 @@ const Register = () => {
 					type="email"
 					name="email"
 					placeholder="Mail"
-					className="w-full p-2 border rounded mb-3"
+					className="w-full p-2 border rounded-sm mb-3"
 					value={formData.email}
 					onChange={handleChange}
 				/>
@@ -138,7 +138,7 @@ const Register = () => {
 					type="text"
 					name="phone"
 					placeholder="Phone Number"
-					className="w-full p-2 border rounded mb-3"
+					className="w-full p-2 border rounded-sm mb-3"
 					value={formData.phone}
 					onChange={handleChange}
 				/>
@@ -147,7 +147,7 @@ const Register = () => {
 						type={showPassword ? "text" : "password"}
 						name="password"
 						placeholder="Password"
-						className="w-full p-2 border rounded"
+						className="w-full p-2 border rounded-sm"
 						value={formData.password}
 						onChange={handleChange}
 					/>
@@ -163,7 +163,7 @@ const Register = () => {
 						type={showConfirmPassword ? "text" : "password"}
 						name="confirmPassword"
 						placeholder="Confirm Password"
-						className="w-full p-2 border rounded"
+						className="w-full p-2 border rounded-sm"
 						value={formData.confirmPassword}
 						onChange={handleChange}
 					/>
@@ -179,20 +179,20 @@ const Register = () => {
 						type="text"
 						name="otp"
 						placeholder="Verify Mail"
-						className="flex-grow p-2 border rounded"
+						className="grow p-2 border rounded-sm"
 						value={formData.otp}
 						onChange={handleChange}
 					/>
 					<button
 						onClick={handleGetOtp}
-						className="text-red-600 text-sm border p-2 rounded"
+						className="text-red-600 text-sm border p-2 rounded-sm"
 						disabled={otpSent}>
 						{otpSent ? "OTP Sent" : "Get OTP"}
 					</button>
 				</div>
 				<button
 					onClick={verifyOtp}
-					className="w-full bg-red-600 text-white p-2 rounded mt-2"
+					className="w-full bg-red-600 text-white p-2 rounded-sm mt-2"
 					disabled={!otpSent}>
 					Register
 				</button>

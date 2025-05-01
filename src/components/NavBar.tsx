@@ -9,7 +9,7 @@ type linkType = {
 
 export default function Navbar({ links }: { links: linkType[] }) {
 	return (
-		<nav className="bg-gradient-to-r from-[#f0f2f5] to-[#e6e9f0] dark:from-[#0a0c23] dark:to-[#101339] py-4 shadow-md transition-colors duration-300">
+		<nav className="bg-linear-to-r from-[#f0f2f5] to-[#e6e9f0] dark:from-[#0a0c23] dark:to-[#101339] py-4 shadow-md transition-colors duration-300">
 			<div className="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4">
 				<Link
 					href="/"

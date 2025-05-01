@@ -1,7 +1,8 @@
 export interface userType {
 	id: number;
 	email: string;
-	name: string;
+	firstname: string;
+	lastname: string;
 	gender: GenderTypes;
 	transactions: transactionTypes[];
 	profession: ProfessionTypes;

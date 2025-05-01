@@ -66,7 +66,7 @@ const AddTransaction = () => {
 						setKind(false);
 						setEnterNew(false);
 					}}>
-					<div className="h-full w-full rounded-lg bg-gradient-to-br from-[#ffffff] to-[#e6e9f0] dark:from-[#0c0e29] dark:to-[#141842] flex flex-col gap-6 justify-center items-center p-8 shadow-lg">
+					<div className="h-full w-full rounded-lg bg-linear-to-br from-[#ffffff] to-[#e6e9f0] dark:from-[#0c0e29] dark:to-[#141842] flex flex-col gap-6 justify-center items-center p-8 shadow-lg">
 						<div>
 							<p className="text-[#080a21] dark:text-[#ebecf9] text-xl font-semibold">
 								Select the type of transaction
@@ -102,7 +102,7 @@ const AddTransaction = () => {
 									Add Amount:
 								</label>
 								<input
-									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-hidden focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									type="number"
 									id="amount"
 									onChange={(e) => {
@@ -126,7 +126,7 @@ const AddTransaction = () => {
 									{kind == "spent" ? "For:" : "From:"}
 								</label>
 								<input
-									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-hidden focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									type="text"
 									id="kind"
 									onChange={(e) => {
@@ -145,7 +145,7 @@ const AddTransaction = () => {
 									Description:
 								</label>
 								<textarea
-									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300 resize-none"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-hidden focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300 resize-none"
 									id="description"
 									rows={3}
 									onChange={(e) => {
@@ -172,7 +172,7 @@ const AddTransaction = () => {
 									defaultValue={`${new Date().getFullYear()}-${
 										new Date().getMonth() + 1
 									}-${new Date().getDate()}`}
-									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
+									className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-hidden focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									type="datetime-local"
 									name="date"
 									id="date"

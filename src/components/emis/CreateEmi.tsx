@@ -94,7 +94,7 @@ function CreateEmi() {
 												  ).padStart(2, "0")}`
 												: undefined
 										}
-										className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#141842] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
+										className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#141842] rounded-md border border-[#31aa3b]/30 focus:outline-hidden focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 									/>
 								</div>
 							))}

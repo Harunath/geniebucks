@@ -80,7 +80,7 @@ export default function LoginPage() {
 					<input
 						type="email"
 						placeholder="Email"
-						className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+						className="w-full border border-gray-300 p-2 rounded-lg focus:outline-hidden focus:ring-3 focus:ring-blue-300"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
@@ -90,7 +90,7 @@ export default function LoginPage() {
 						<input
 							type={showPassword ? "text" : "password"}
 							placeholder="Password"
-							className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+							className="w-full border border-gray-300 p-2 rounded-lg focus:outline-hidden focus:ring-3 focus:ring-blue-300"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required

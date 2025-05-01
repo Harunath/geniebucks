@@ -21,7 +21,7 @@ export default function CalendarPages() {
 		<>
 			<div className="w-fit">
 				<input
-					className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-none focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
+					className="w-full px-3 py-2 bg-[#f0f2f5] dark:bg-[#080a21] text-[#080a21] dark:text-[#ebecf9] rounded-md border border-[#31aa3b]/30 focus:outline-hidden focus:ring-2 focus:ring-[#31aa3b]/50 transition duration-300"
 					type="date"
 					onChange={(e) => setDate(new Date(e.target.value))}
 					defaultValue={`${date.getFullYear()}-${
