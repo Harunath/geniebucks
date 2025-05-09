@@ -3,7 +3,12 @@ import useTransactions from "@/store/hooks/useTransactions";
 import { useState, useEffect, useMemo } from "react";
 
 export default function CalendarPages() {
-	const today = new Date().toLocaleDateString().split("/");
+	const now = new Date();
+	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+		.toLocaleDateString()
+		.split("/");
+	// const today = new Date().toLocaleDateString().split("/");
+	console.log(today, "today");
 	// const time = new Date().toLocaleTimeString();
 	// time is not set for the transaction
 	const [date, setDate] = useState(
@@ -14,6 +19,7 @@ export default function CalendarPages() {
 	const memoizedDate = useMemo(() => date, [date]);
 
 	useEffect(() => {
+		console.log(memoizedDate);
 		getTransactions(memoizedDate);
 	}, [memoizedDate, getTransactions]);
 

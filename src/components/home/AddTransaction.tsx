@@ -47,7 +47,9 @@ const AddTransaction = () => {
 		setKind(false);
 		setEnterNew(false);
 		if (response.data) {
-			getTransactions(new Date());
+			const now = new Date();
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+			getTransactions(today);
 			toast("Success");
 			// toast(({ closeToast }) => <div>Hello 👋</div>);
 			// alert("Sucess");
