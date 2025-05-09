@@ -56,7 +56,7 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className="flex h-full w-full items-center justify-center sm:gap-x-4">
+		<div className="flex min-h-screen w-full items-center justify-center sm:gap-x-4">
 			<div className="hidden sm:block w-1/2">
 				{/* <Image
 					src="https://res.cloudinary.com/degrggosz/image/upload/v1746781128/Web__What-is-Bussines-Analytics_je92qe.webp"
