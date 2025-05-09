@@ -6,8 +6,8 @@ function Totals({ transactions }: { transactions: transactionTypes[] | null }) {
 	let dailyAdd = 0;
 	if (transactions)
 		transactions.forEach((t) => {
-			if (t.type === TransactTypes.income) dailyAdd += t.amount;
-			else dailySpent += t.amount;
+			if (t.type === TransactTypes.income) dailyAdd += Number(t.amount);
+			else dailySpent += Number(t.amount);
 		});
 	return (
 		<div className="flex">
