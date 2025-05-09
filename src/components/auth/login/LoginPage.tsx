@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
 	const [email, setEmail] = useState("");
@@ -55,8 +56,25 @@ export default function LoginPage() {
 	};
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gray-100">
-			<div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+		<div className="flex h-full w-full items-center justify-center sm:gap-x-4">
+			<div className="hidden sm:block w-1/2">
+				{/* <Image
+					src="https://res.cloudinary.com/degrggosz/image/upload/v1746781128/Web__What-is-Bussines-Analytics_je92qe.webp"
+					width={300}
+					height={300}
+					className="h-auto w-full"
+					alt="login image"
+				/> */}
+				<Image
+					src="https://res.cloudinary.com/degrggosz/image/upload/v1746809258/ChatGPT_Image_May_9_2025_10_17_17_PM_iqfzqr.png"
+					width={400}
+					height={600}
+					alt="Responsive image"
+					sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+					className="h-auto w-full"
+				/>
+			</div>
+			<div className="flex-1 max-w-md bg-white p-6 rounded-lg shadow-md">
 				<h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
 				{error && <p className="text-red-500 text-center">{error}</p>}
