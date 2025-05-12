@@ -49,25 +49,27 @@ export default function ImageUpload() {
 				type="file"
 				accept="image/*"
 				onChange={handleFileChange}
-				className="mb-4"
+				className="mb-4 p-2"
+				placeholder="upload image"
 			/>
 
 			{preview && (
-				<Image
-					src={preview}
-					alt="Preview"
-					className="w-40 h-40 object-cover mb-4"
-					width={160}
-					height={160}
-				/>
+				<>
+					<Image
+						src={preview}
+						alt="Preview"
+						className="w-40 h-40 object-cover mb-4"
+						width={160}
+						height={160}
+					/>
+					<button
+						onClick={handleUpload}
+						disabled={uploading}
+						className="bg-blue-500 text-white px-4 py-2 rounded-md">
+						{uploading ? "Uploading..." : "Upload"}
+					</button>
+				</>
 			)}
-
-			<button
-				onClick={handleUpload}
-				disabled={uploading}
-				className="bg-blue-500 text-white px-4 py-2 rounded-md">
-				{uploading ? "Uploading..." : "Upload"}
-			</button>
 
 			{imageUrl && (
 				<div className="mt-4">

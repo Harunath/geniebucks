@@ -8,6 +8,7 @@ import CalendarPages from "./CalendarPage";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import VoiceInput from "../upload/VoiceInput";
 
 const List = () => {
 	const transactionsList = useStore((state) => state.transactions);
@@ -119,6 +120,13 @@ const List = () => {
 					<p>NO TRANSACTIONS .....!</p>
 					<div className=" w-1/2">
 						<AddTransaction />
+					</div>
+					<div>
+						<VoiceInput
+							onResult={(text) => {
+								console.log(text);
+							}}
+						/>
 					</div>
 				</div>
 			)}
