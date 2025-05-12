@@ -21,6 +21,7 @@ type Props = {
 
 export default function VoiceInput({ onResult }: Props) {
 	const [listening, setListening] = useState(false);
+	const [resultText, setResultText] = useState("");
 	const recognitionRef = useRef<SpeechRecognition | null>(null);
 
 	const startListening = () => {
@@ -53,6 +54,7 @@ export default function VoiceInput({ onResult }: Props) {
 			const transcript = event.results[0][0].transcript;
 			console.log("Transcript:", transcript);
 			onResult(transcript);
+			setResultText(transcript);
 			setListening(false);
 		};
 
@@ -72,10 +74,13 @@ export default function VoiceInput({ onResult }: Props) {
 	};
 
 	return (
-		<button
-			onClick={startListening}
-			className="bg-blue-500 text-white px-4 py-2 rounded">
-			🎤 {listening ? "Listening..." : "Start Voice Input"}
-		</button>
+		<>
+			<button
+				onClick={startListening}
+				className="bg-blue-500 text-white px-4 py-2 rounded">
+				🎤 {listening ? "Listening..." : "Start Voice Input"}
+			</button>
+			<div>{resultText && <p>{resultText}</p>}</div>
+		</>
 	);
 }
